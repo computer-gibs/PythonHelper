@@ -1,0 +1,7 @@
+{
+  "langs": [
+    "en",
+    "ru"
+  ],
+  "model_max_length": 1024
+}
