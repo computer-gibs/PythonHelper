@@ -16,4 +16,4 @@
 * [sagard21/python-code-explainer](https://huggingface.co/sagard21/python-code-explainer)
 * [facebook/wmt19-en-ru](https://huggingface.co/facebook/wmt19-en-ru)*
 
-*Компания Meta Platforms Inc., владеющая социальными сетями Facebook, по решению суда от 21.03.2022 признана экстремистской организацией
+*Компания Meta Platforms Inc., владеющая социальной сетью Facebook, по решению суда от 21.03.2022 признана экстремистской организацией
