@@ -5,15 +5,19 @@ from transformers import (
     AutoConfig,
     pipeline,
 )
+import torch
 model_name = "sagard21/python-code-explainer"
 tokenizer = AutoTokenizer.from_pretrained(model_name, padding=True)
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 config = AutoConfig.from_pretrained(model_name)
+# Проверка на наличие CUDA
+if torch.cuda.is_available():
+    model = model.to('cuda')
 model.eval()
 pipe = pipeline("summarization", model=model_name, config=config, tokenizer=tokenizer)
 def generate_text(text_prompt):
-  response = pipe(text_prompt)
-  return response[0]['summary_text']
+    response = pipe(text_prompt)
+    return response[0]['summary_text']
 textbox1 = gr.Textbox(value = """
 class Solution(object):
     def isValid(self, s):
@@ -29,10 +33,7 @@ class Solution(object):
         return not stack""")
 textbox2 = gr.Textbox()
 if __name__ == "__main__":
-    gr.Textbox("The Inference Takes about 1 min 30 seconds")
+    gr.Textbox("Promt")
     with gr.Blocks() as demo:
-        gr.Interface(fn = generate_text, inputs = textbox1, outputs = textbox2)
-        with gr.Row():
-            gr.Image(value = "output.jpg", label = "Sample Explaination in Natural Language")
-            gr.Image(value = "code.jpg", label = "Sample Code for Checking if a Binary Tree is Mirrored")
+        gr.Interface(fn=generate_text, inputs=textbox1, outputs=textbox2)
     demo.launch()
