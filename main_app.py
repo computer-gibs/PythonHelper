@@ -6,18 +6,25 @@ from transformers import (
     pipeline,
 )
 import torch
+from translator import translate_text  # Import translator function
+
 model_name = "sagard21/python-code-explainer"
 tokenizer = AutoTokenizer.from_pretrained(model_name, padding=True)
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 config = AutoConfig.from_pretrained(model_name)
-# Проверка на наличие CUDA
+
 if torch.cuda.is_available():
     model = model.to('cuda')
 model.eval()
+
 pipe = pipeline("summarization", model=model_name, config=config, tokenizer=tokenizer)
+
 def generate_text(text_prompt):
     response = pipe(text_prompt)
-    return response[0]['summary_text']
+    english_explanation = response[0]['summary_text']
+    russian_explanation = translate_text(english_explanation)  # Translate English explanation to Russian
+    return russian_explanation
+
 textbox1 = gr.Textbox(value = """
 class Solution(object):
     def isValid(self, s):
@@ -32,8 +39,8 @@ class Solution(object):
                 stack.append(char)
         return not stack""")
 textbox2 = gr.Textbox()
+
 if __name__ == "__main__":
-    gr.Textbox("Promt")
     with gr.Blocks() as demo:
         gr.Interface(fn=generate_text, inputs=textbox1, outputs=textbox2)
     demo.launch()
