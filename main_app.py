@@ -23,7 +23,7 @@ def generate_text(text_prompt):
     response = pipe(text_prompt)
     english_explanation = response[0]['summary_text']
     russian_explanation = translate_text(english_explanation)  # Translate English explanation to Russian
-    return russian_explanation
+    return english_explanation, russian_explanation
 
 textbox1 = gr.Textbox(value = """
 class Solution(object):
@@ -39,8 +39,9 @@ class Solution(object):
                 stack.append(char)
         return not stack""")
 textbox2 = gr.Textbox()
+textbox3 = gr.Textbox()
 
 if __name__ == "__main__":
     with gr.Blocks() as demo:
-        gr.Interface(fn=generate_text, inputs=textbox1, outputs=textbox2)
+        gr.Interface(fn=generate_text, inputs=textbox1, outputs=[textbox2, textbox3])
     demo.launch()
