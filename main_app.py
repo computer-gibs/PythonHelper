@@ -24,7 +24,7 @@ pipe = pipeline("summarization", model=model_name, config=config, tokenizer=toke
 def generate_text(text_prompt):
     response = pipe(text_prompt)
     english_explanation = response[0]['summary_text']
-    russian_explanation = translate_text(english_explanation)  # переводим объяснение кода с англ на русский язык
+    russian_explanation = translate_text(english_explanation)  # переводим объяснение кода с англ на рус язык
     return english_explanation, russian_explanation
 
 
