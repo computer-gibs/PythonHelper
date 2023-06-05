@@ -6,7 +6,7 @@ from transformers import (
     pipeline,
 )
 import torch
-from translator import translate_text  # Import translator function
+from translator import translate_text  # импортируем функцию переводчика
 
 
 model_name = "sagard21/python-code-explainer"
@@ -15,7 +15,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 config = AutoConfig.from_pretrained(model_name)
 
 if torch.cuda.is_available():
-    model = model.to('cuda')
+    model = model.to('cuda')  # запускаем модель на GPU, если доступно
 model.eval()
 
 pipe = pipeline("summarization", model=model_name, config=config, tokenizer=tokenizer)
@@ -24,7 +24,7 @@ pipe = pipeline("summarization", model=model_name, config=config, tokenizer=toke
 def generate_text(text_prompt):
     response = pipe(text_prompt)
     english_explanation = response[0]['summary_text']
-    russian_explanation = translate_text(english_explanation)  # Translate English explanation to Russian
+    russian_explanation = translate_text(english_explanation)  # переводим объяснение кода с англ на русский язык
     return english_explanation, russian_explanation
 
 
@@ -47,4 +47,4 @@ textbox3 = gr.Textbox()
 if __name__ == "__main__":
     with gr.Blocks() as demo:
         gr.Interface(fn=generate_text, inputs=textbox1, outputs=[textbox2, textbox3])
-    demo.launch()
+    demo.launch()  # запускаем Gradio-интерфейс
