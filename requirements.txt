@@ -2,3 +2,4 @@ torch
 transformers
 gradio
 sacremoses
+flake8
