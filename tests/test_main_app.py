@@ -17,7 +17,7 @@ class Solution(object):
             else:
                 stack.append(char)
         return not stack"""
-        keywords = ["class Solution", "isValid", "mapping", "for char", "return False"]
+        keywords = ["class Solution", "isValid", "mapping", "return False"]
 
         result = generate_text(input_code)
         for keyword in keywords:
