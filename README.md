@@ -1,5 +1,6 @@
 # PythonHelper - web-приложение, объясняющее код
 Проект по дисциплине: "Программная инженерия"
+* [PythonHelper HuggingFace](https://huggingface.co/spaces/computergibs/PythonHelper)
 # Функционал приложения
 Генерация построчного объяснения смысла кода с переводом на русский язык
 # Целевая аудитория
